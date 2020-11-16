@@ -13,7 +13,7 @@ namespace TaskLibrary.MainExercises
                                              "Develop a program that calculates how many goals and the eye of a dragon that is N years old." +
                                              " Consider that at birth the dragon has already three heads.";
 
-        public ArgsOption ArgsOption { get; } = new ArgsOption() { { "Please enter N", typeof(Int32) } };
+        public ArgsOption ArgsOption { get; } = new ArgsOption() { { ExerciseType.Integer, "Please enter N" } };
 
         public string Invoke(IList<object> args)
         {

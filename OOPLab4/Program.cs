@@ -14,7 +14,7 @@ namespace OOPLab4
             IInputService inputService = new ConsoleInputService(logger);
             var exercises = InstanceExercises();
 
-            var controller = new ExerciseController(logger,inputService,);
+            var controller = new ExerciseController(logger,inputService,exercises);
         }
 
         public static List<IExercise> InstanceExercises()

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using OOPLab4.View.Interfaces;
 using TaskLibrary.Base;
 
 namespace OOPLab4.View
 {
-    class ConsoleLoggerService : ILoggerService
+    class ConsoleOutputService : IOutputService
     {
         private const ConsoleColor DefaultColor = ConsoleColor.White; 
         private const ConsoleColor MessageColor = ConsoleColor.White; 
@@ -35,9 +36,10 @@ namespace OOPLab4.View
 
         public void LogExercises(IEnumerable<IExercise> exercises)
         {
+            int index = 1;
             foreach (var exercise in exercises)
             {
-                Console.WriteLine(exercise.Description);
+                Console.WriteLine($"{index++} - {exercise.Name}");
             }
         }
     }

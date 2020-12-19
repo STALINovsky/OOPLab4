@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using OOPLab4.View.Interfaces;
 using TaskLibrary.Base;
 
 namespace OOPLab4.View
 {
     public class ConsoleInputService : IInputService
     {
-        public ConsoleInputService(ILoggerService loggerService)
+        public ConsoleInputService(IOutputService outputService)
         {
-            LoggerService = loggerService;
+            OutputService = outputService;
         }
-        private ILoggerService LoggerService { get; }
+        private IOutputService OutputService { get; }
 
         public int GetNumber()
         {
@@ -19,39 +20,43 @@ namespace OOPLab4.View
             int result;
             while (!int.TryParse(input, out result))
             {
-                LoggerService.LogError("Invalid input");
+                OutputService.LogError("Invalid input. Try again");
+                input = Console.ReadLine();
             }
             return result;
         }
 
-        public string GetString()
+        public List<int> GetArrayOfNumbers()
         {
-            return Console.ReadLine();
-        }
+            List<int> numbers = new List<int>();
+            OutputService.LogMessage("To stop input array please press enter");
 
-        public IList<object> GetExerciseArgs(ArgsOption argsOption)
-        {
-            var args = new List<object>();
-
-            foreach (var stringTypePair in argsOption)
+            while (true)
             {
-                object arg;
-                LoggerService.LogMessage(stringTypePair.Value);
-                switch (stringTypePair.Key)
+                string userInput = Console.ReadLine();
+                if (userInput == "")
                 {
-                    case ExerciseType.Integer:
-                        arg = GetNumber();
-                        break;
-                    case ExerciseType.String:
-                        arg = GetString();
-                        break;
-                    default:
-                        throw new InvalidOperationException($"Can not input type {stringTypePair.Key}");
+                    break;
                 }
-                args.Add(arg);
+
+                if (!int.TryParse(userInput, out var newNumber))
+                {
+                    OutputService.LogError("Invalid input.Try again");
+                }
+                else
+                {
+                    numbers.Add(newNumber);
+                }
             }
 
-            return args;
+            return numbers;
+        }
+
+        public bool IsUserAgree()
+        {
+            const string yesAnswer = "yes";
+            OutputService.LogMessage("enter yes or no");
+            return Console.ReadLine().Contains(yesAnswer);
         }
     }
 }

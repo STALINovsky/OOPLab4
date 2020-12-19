@@ -6,9 +6,12 @@ namespace TaskLibrary.Base
 {
     public interface IExercise
     {
+        string Name { get; }
         string Description { get; }
 
-        ArgsOption ArgsOption { get; }
-        string Invoke(IList<object> args);
+        IReadOnlyCollection<ExerciseArgDescription> ArgumentsDescriptions { get; }
+        void AddExerciseArgument(string name, object value);
+        string Invoke();
     }
+
 }

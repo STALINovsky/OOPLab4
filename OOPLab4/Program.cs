@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using OOPLab4.Controllers;
+using OOPLab4.Factories;
+using OOPLab4.Hosts;
 using OOPLab4.View;
+using OOPLab4.View.Interfaces;
 using TaskLibrary.Base;
 
 namespace OOPLab4
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            ILoggerService logger = new ConsoleLoggerService();
-            IInputService inputService = new ConsoleInputService(logger);
-            var exercises = InstanceExercises();
+            IOutputService output = new ConsoleOutputService();
+            IInputService inputService = new ConsoleInputService(output);
 
-            var controller = new ExerciseController(logger,inputService,exercises);
-        }
+            var exercises = ExerciseFactory.CreateExercises();
+            var host = new Host(output,inputService,exercises);
 
-        public static List<IExercise> InstanceExercises()
-        {
-            var exercises = new List<IExercise>();
-            //TODO:Fill exercises
-            return exercises;
+            host.Run();
         }
     }
 }
